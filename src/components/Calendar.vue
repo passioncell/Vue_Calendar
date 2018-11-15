@@ -4,7 +4,7 @@
         <a href="#" v-on:click="onClickPrev(currentMonth)">◀</a>
         {{currentYear}}년 {{currentMonth}}월
         <a href="#" v-on:click="onClickNext(currentMonth)">▶</a>
-        </h2>
+      </h2>
       <table class="table table-hover">
           <thead>
             <tr>
@@ -15,8 +15,13 @@
           </thead>
           <tbody>
             <tr v-for="(row, index) in currentCalendarMatrix" :key="index">
-              <td v-for="(day, index2) in row" :key="index2">
-                {{day}}
+              <td v-for="(day, index2) in row" :key="index2" style="padding:20px;">
+                <span v-if="isToday(currentYear, currentMonth, day)" class="rounded">
+                  {{day}}
+                </span>
+                <span v-else>
+                  {{day}}
+                </span>
               </td>
             </tr>
           </tbody>
@@ -145,12 +150,21 @@ export default {
         }
         this.init();
       },
-      onChangeYear: function(){
-
-      },
-      onChangeMonth: function(){
-
+      isToday: function(year, month, day){
+        let date = new Date();
+        return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate(); 
       }
   }
 }
 </script>
+
+<style type="text/css">
+    .rounded {
+      -moz-border-radius:20px 20px 20px 20px; 
+      border-radius:20px 20px 20px 20px;
+      border:solid 1px #ffffff;
+      background-color:#2b6bd1;
+      padding:10px;
+      color:#ffffff;
+    }
+</style>
